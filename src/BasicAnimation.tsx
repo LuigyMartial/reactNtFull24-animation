@@ -12,6 +12,8 @@ import {useRef} from "react";
 const BasicAnimation: React.FC = () => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const translateAnim = useRef(new Animated.Value(0)).current;
+    const scaleAnim = useRef(new Animated.Value(1)).current;
+    const rotateAnim = useRef(new Animated.Value(1)).current;
 
     const handleFadeIn = () => {
         Animated.timing(fadeAnim, {
@@ -38,38 +40,102 @@ const BasicAnimation: React.FC = () => {
         }).start();
     }
 
+    const handleScale = () => {
+        Animated.sequence([
+            Animated.timing(scaleAnim, {
+                toValue: 1.5,
+                duration: 200,
+                useNativeDriver: true
+            }),
+            Animated.timing(scaleAnim, {
+                toValue: 3,
+                duration: 500,
+                useNativeDriver: true,
+            }),
+            Animated.timing(scaleAnim, {
+                toValue: 1,
+                duration: 500,
+                useNativeDriver: true
+            })
+        ]).start();
+    }
+
+    const handleRotate = () => {
+        Animated.timing(rotateAnim, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true,
+        }).start(()=> {
+            rotateAnim.setValue(0);
+        });
+    }
+
+    const spin = rotateAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0deg", "360deg"]
+    })
+
+
+
     return (
-    <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.headerText}>Basic Animation Demo</Text>
 
         {/* Fade animation demo */}
         <Text style={styles.headerText}>Fade In & Fade Out Demo</Text>
         <View style={styles.demoContainer}>
-            <Animated.View style={[styles.box, styles.fadeBox, {opacity: fadeAnim}]}></Animated.View>
-            <View style={styles.buttonContainer}>
-                <Button title='Fade In' onPress={handleFadeIn} />
-                <Button title='Fade Out' onPress={handleFadeOut} />
-            </View>
+          <Animated.View
+            style={[styles.box, styles.fadeBox, { opacity: fadeAnim }]}
+          ></Animated.View>
+          <View style={styles.buttonContainer}>
+            <Button title="Fade In" onPress={handleFadeIn} />
+            <Button title="Fade Out" onPress={handleFadeOut} />
+          </View>
         </View>
         {/* Translate animation demo */}
         <Text style={styles.headerText}>Tanslate Demo </Text>
         <View style={styles.demoContainer}>
-            <Animated.View
-                style={[
-                    styles.box,
-                    styles.translateBox,
-                    {
-                        transform: [
-                            {
-                                translateX: translateAnim,
-                            },
-                        ],
-                    },
-                ]}> </Animated.View>
-            <Button title='Translate' onPress={handleTranslate} />
+          <Animated.View
+            style={[
+              styles.box,
+              styles.translateBox,
+              {
+                transform: [
+                  {
+                    translateX: translateAnim,
+                  },
+                ],
+              },
+            ]}
+          >
+            {' '}
+          </Animated.View>
+          <Button title="Translate" onPress={handleTranslate} />
         </View>
-    </ScrollView>
-    )
+        {/* Scale animation demo */}
+        <Text style={styles.headerText}>Scale Demo</Text>
+        <View style={styles.demoContainer}>
+          <Animated.View
+            style={[
+              styles.box,
+              styles.scaleBox,
+              { transform: [{ scale: scaleAnim }] },
+            ]}
+          ></Animated.View>
+          <Button title="Scale" onPress={handleScale} />
+        </View>
+        {/* Rotate animation demo */}
+        <Text style={styles.headerText}>Rotate Demo</Text>
+        <Animated.View
+          style={[
+            styles.box,
+            styles.rotateBox,
+            { transform: [{ rotate: spin }] },
+          ]}
+        ></Animated.View>
+        <Button title='Rotate' onPress={handleRotate} />
+      </ScrollView>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -102,8 +168,10 @@ const styles = StyleSheet.create({
         shadowRadius: 3.5,
         elevation: 5,
     },
-    fadeBox: { backgroundColor: '#3498db'},
-    translateBox: { backgroundColor: '#89c825'}
+    fadeBox: { backgroundColor: '#3498db' },
+    translateBox: { backgroundColor: '#89c825' },
+    scaleBox: { backgroundColor: '#3009a3' },
+    rotateBox: { backgroundColor: '#a30977' }
 });
 
 export default BasicAnimation;
