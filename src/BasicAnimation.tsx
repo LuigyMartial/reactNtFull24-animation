@@ -14,6 +14,8 @@ const BasicAnimation: React.FC = () => {
     const translateAnim = useRef(new Animated.Value(0)).current;
     const scaleAnim = useRef(new Animated.Value(1)).current;
     const rotateAnim = useRef(new Animated.Value(1)).current;
+    const springAnim = useRef(new Animated.Value(0)).current;
+    const bounceAnim = useRef(new Animated.Value(0)).current;
 
     const handleFadeIn = () => {
         Animated.timing(fadeAnim, {
@@ -75,7 +77,23 @@ const BasicAnimation: React.FC = () => {
         outputRange: ["0deg", "360deg"]
     })
 
+    const handleSpring = () => {
+        Animated.spring(springAnim, {
+          toValue: 100,
+          friction: 5,
+          tension: 40,
+          useNativeDriver: true,
+        }).start(() => {
+            springAnim.setValue(0);
+        })
+    }
 
+    const handleBounce = () => {
+        Animated.sequence([
+            Animated.spring(bounceAnim, { toValue: -20, useNativeDriver: true }),
+            Animated.spring(bounceAnim, { toValue: 0, useNativeDriver: true }),
+        ]).start();
+    }
 
     return (
       <ScrollView contentContainerStyle={styles.container}>
@@ -134,6 +152,29 @@ const BasicAnimation: React.FC = () => {
           ]}
         ></Animated.View>
         <Button title='Rotate' onPress={handleRotate} />
+         {/* Spring animation demo */}
+         <Text style={styles.headerText}>Spring Demo</Text>
+         <Animated.View
+           style={[
+               styles.box,
+               styles.springBox,
+               { transform: [{ translateX: springAnim}]}
+           ]}
+         >
+         </Animated.View>
+         <Button title="Spring" onPress={handleSpring} />
+         {/* Bounce animation demo */}
+         <Text style={styles.headerText}>Bounce Demo</Text>
+         <Animated.View
+            style={[
+                styles.box,
+                styles.bounceBox,
+                { transform: [{ translateY: bounceAnim }] },
+            ]}
+         >
+         </Animated.View>
+         <Button title="Bounce" onPress={handleBounce} />
+
       </ScrollView>
     );
 }
@@ -171,7 +212,9 @@ const styles = StyleSheet.create({
     fadeBox: { backgroundColor: '#3498db' },
     translateBox: { backgroundColor: '#89c825' },
     scaleBox: { backgroundColor: '#3009a3' },
-    rotateBox: { backgroundColor: '#a30977' }
+    rotateBox: { backgroundColor: '#a30977' },
+    springBox: { backgroundColor: '#a30925'},
+    bounceBox: { backgroundColor: '#7f09a3ec'}
 });
 
 export default BasicAnimation;

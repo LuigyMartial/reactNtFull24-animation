@@ -8,6 +8,11 @@ const topics = [
     id: 1,
     title: 'Basic Animation Demo',
     screen: 'BasicAnimation',
+  },
+  {
+    id: 2,
+    title: 'Interpolation Demo',
+    screen: 'Interpolation',
   }
 ]
 
