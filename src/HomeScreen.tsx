@@ -13,6 +13,16 @@ const topics = [
     id: 2,
     title: 'Interpolation Demo',
     screen: 'Interpolation',
+  },
+  {
+    id: 3,
+    title: 'Combined Animation Demo',
+    screen: 'CombinedAnimation',
+  },
+  {
+    id: 4,
+    title: 'Gesture Animation Demo',
+    screen: 'GestureAnimation',
   }
 ]
 
