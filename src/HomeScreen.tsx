@@ -23,6 +23,11 @@ const topics = [
     id: 4,
     title: 'Gesture Animation Demo',
     screen: 'GestureAnimation',
+  },
+  {
+    id: 5,
+    title: 'Reanimated Core Concepts',
+    screen: 'ReanimatedCoreConcepts',
   }
 ]
 

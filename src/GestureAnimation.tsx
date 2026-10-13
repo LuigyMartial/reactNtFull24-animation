@@ -27,8 +27,6 @@ const GestureAnimation: React.FC = () => {
       }),
   ).current;
 
-
-
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Gesture Animation Demo</Text>
