@@ -28,6 +28,11 @@ const topics = [
     id: 5,
     title: 'Reanimated Core Concepts',
     screen: 'ReanimatedCoreConcepts',
+  },
+  {
+    id: 6,
+    title: 'Reanimated Animation Types',
+    screen: 'ReanimatedAnimationTypes',
   }
 ]
 
