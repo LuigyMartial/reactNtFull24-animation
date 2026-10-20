@@ -33,6 +33,16 @@ const topics = [
     id: 6,
     title: 'Reanimated Animation Types',
     screen: 'ReanimatedAnimationTypes',
+  },
+  {
+    id: 7,
+    title: 'Reanimated Gestures',
+    screen: 'ReanimatedGestures',
+  },
+  {
+    id: 8,
+    title: 'Reanimated Form Validation',
+    screen: 'ReanimatedFormValidation',
   }
 ]
 
